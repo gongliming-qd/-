@@ -6,14 +6,10 @@ import Router from '../router/index'
 axios.defaults.withCredentials = true
 
 // 
-let baseURL = ''
-process.env.NODE_ENV === 'development'?  baseURL='/api' : baseURL = 'http://www.gongliming.com'
-
 export const http = axios.create({
     // baseURL: 'http://wthrcdn.etouch.cn/weather_mini',
-    baseURL
+    baseURL: '/api',
 })
-
 
 //  登录前请求头的设置
 // 添加请求拦截器
