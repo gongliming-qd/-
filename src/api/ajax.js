@@ -7,7 +7,8 @@ axios.defaults.withCredentials = true
 
 // 
 let baseURL = ''
-process.env.NODE_ENV === 'development'?  baseURL='/api' : baseURL = 'http://www.gongliming.com'
+process.env.NODE_ENV === 'development'?  baseURL='/glm' : baseURL = '/'
+// process.env.NODE_ENV === 'development'?  baseURL='/api' : baseURL = 'http://www.gongliming.com'
 
 export const http = axios.create({
     // baseURL: 'http://wthrcdn.etouch.cn/weather_mini',

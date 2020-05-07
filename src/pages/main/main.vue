@@ -6,18 +6,15 @@
 </template>
 
 <script>
-import axios from "axios";
 import {http} from '../../api/ajax'
 export default {
   data() {
     return {};
   },
   created() {
-    
     http
-      .get("/liming/", {
+      .get("/api/signing/", {
         params: {
-          
         }
       })
       .then(function(response) {
