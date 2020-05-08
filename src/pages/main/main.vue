@@ -6,25 +6,20 @@
 </template>
 
 <script>
-import {http} from '../../api/ajax'
+import {get_family_all} from '../../api/http'
 export default {
   data() {
     return {};
   },
   created() {
-    http
-      .get("/api/signing/", {
-        params: {
-        }
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    this.init_get_data()
   },
-  methods: {},
+  methods: {
+    async init_get_data(){
+        let aaa = await get_family_all()
+        console.log(aaa);
+    }
+  },
   components: {}
 };
 </script>

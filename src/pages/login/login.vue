@@ -111,12 +111,11 @@ export default {
   top: 0;
   bottom: 0;
   right: 0;
-  background: url("../../static/imgs/login/bg.png") center center ;
   // 登录界面
   .login {
     width: 590px;
     height: 536px;
-    background: rgba(40, 65, 117, 1);
+    background: #cfe8fc;
     border-radius: 10px;
     position: absolute;
     top: 50%;
@@ -143,9 +142,7 @@ export default {
       /deep/ input {
         text-indent: 2em;
         height: 50px;
-        background-color: #284175;
         border: 0px solid red;
-        border-bottom: 1px solid #4B87FF;
       }
       /deep/ button {
         width: 100%;
