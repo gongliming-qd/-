@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import {get_family_all} from '../../api/http'
+import {get_family_all} from '@/api/http'
 export default {
   data() {
     return {};

@@ -10,12 +10,12 @@
         <!-- 账号 -->
         <div class="common zhanhao">
           <span class="iconfont icon-iconzh1" :class=" icon_admin == true? 'select':''"></span>
-          <el-input placeholder="请输入账号" v-model="zhan_hao" clearable></el-input>
+          <el-input placeholder="请输入账号" v-model="login.username" clearable></el-input>
         </div>
         <!-- 密码 -->
         <div class="common password">
           <span class="iconfont" :class="icon_psw == true? 'select icon-mima':'icon-mima1'"></span>
-          <el-input placeholder="请输入密码" v-model="password" show-password></el-input>
+          <el-input placeholder="请输入密码" v-model="login.psw" show-password></el-input>
         </div>
         <!-- 验证码 -->
         <div class="common confirm">
@@ -28,18 +28,21 @@
           </div>
         </div>
         <!-- 登录按钮 -->
-        <el-button type="primary" @click="tologin">登录</el-button>
+        <el-button type="primary" @click="btn_tologin">登录</el-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {tologin} from '@/api/http'
 export default {
   data() {
     return {
-      zhan_hao: "",
-      password: "",
+      login:{
+         username: "",
+          psw: "",
+      },
       confirm: "",
       // 正则控制
       icon_admin: false,
@@ -49,24 +52,17 @@ export default {
   },
   methods: {
     // 点击登录按钮
-    tologin() {
-      // // 1. 验证手机号不能为空
-      // if (this.zhan_hao.length == 0) {
-      //   this.$message.warning("账号不能为空!");
-      //   return false;
-      // }
-      // // 2. 验证手机号格式是否正确
-      // // 2.验证手机格式
-      // if (!/^1[3456789]\d{9}$/.test(this.zhan_hao)) {
-      //   this.$message.warning("手机号格式不正确哦!");
-      //   return false;
-      // }
-      // // 3. 验证密码是否为空
-      // if (this.zhan_hao.length == 0) {
-      //   this.$message.warning("密码不能为空!");
-      //   return false;
-      // }
-      this.$router.replace('/')
+    async btn_tologin() {
+      let data = {
+        username : this.login.username,
+        psw : this.login.psw,
+      }
+      console.log(data);
+      
+      let aaa = await tologin(data)
+      console.log(aaa);
+      
+      // this.$router.replace('/')
     }
   },
   watch: {
@@ -148,7 +144,7 @@ export default {
         width: 100%;
         height: 56px;
         margin-top: 16px;
-        border-radius:25px;
+        border-radius: 25px;
       }
       // 大众
       .common {
@@ -181,12 +177,12 @@ export default {
         .img {
           height: 50px;
           width: 100px;
-          background-color: #7E95B0;
+          background-color: #7e95b0;
           position: absolute;
           top: 0;
           right: 0;
           display: flex;
-          border-radius:5px;
+          border-radius: 5px;
           align-items: center;
           justify-content: center;
           color: white;
