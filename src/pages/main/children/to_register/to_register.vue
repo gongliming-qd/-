@@ -4,7 +4,7 @@
     <!-- 登录界面 -->
     <div class="login">
       <!-- 标题 -->
-      <div class="title">修改密码</div>
+      <div class="title">注册用户</div>
       <!-- 主要内容 -->
       <div class="body">
         <!-- 账号 -->
@@ -23,7 +23,7 @@
           <el-input placeholder="请输入确认密码" v-model="login.psw_confirm" show-password></el-input>
         </div>
         <!-- 登录按钮 -->
-        <el-button type="primary" @click="btn_tologin">登录</el-button>
+        <el-button type="primary" @click="btn_tologin">注册</el-button>
       </div>
     </div>
   </div>
