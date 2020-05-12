@@ -27,15 +27,11 @@ http.interceptors.request.use(function (config) {
 // 添加响应拦截器
 http.interceptors.response.use(function (response) {
     // 对响应数据做点什么
-    // if(response.data.meta.msg == '无效token' && response.data.meta.status == 400){
-    //     Vue.prototype.$message.warning('请重新登录哦!')
-    //     Router.push('/login')
-    // }else{
-    //     return response;
-    // }
-    // if(!response.data.meta){
-    //     Vue.prototype.$message.warning('请重新登录哦!')
-    //     // Router.push('/login')
-    // }
+    if(response.data.results.message == 'token验证不通过' && response.data.state == 'false'){
+        Vue.prototype.$message.warning('请重新登录哦!')
+        Router.push('/login')
+    }else{
+        return response;
+    }
     return response;
   });

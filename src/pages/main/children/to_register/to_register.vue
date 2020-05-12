@@ -4,7 +4,7 @@
     <!-- 登录界面 -->
     <div class="login">
       <!-- 标题 -->
-      <div class="title">用户登录</div>
+      <div class="title">修改密码</div>
       <!-- 主要内容 -->
       <div class="body">
         <!-- 账号 -->
@@ -17,15 +17,10 @@
           <span class="iconfont" :class="icon_psw == true? 'select icon-mima':'icon-mima1'"></span>
           <el-input placeholder="请输入密码" v-model="login.psw" show-password></el-input>
         </div>
-        <!-- 验证码 -->
-        <div class="common confirm">
-          <span class="iconfont icon-anquan" :class="icon_confirm == true? 'select':''"></span>
-          <el-input placeholder="请输入验证码" v-model="confirm"></el-input>
-          <!-- 验证码图片 -->
-          <div class="img">
-            1234
-            <img src alt />
-          </div>
+        <!-- 密码 -->
+        <div class="common password">
+          <span class="iconfont" :class="icon_psw == true? 'select icon-mima':'icon-mima1'"></span>
+          <el-input placeholder="请输入确认密码" v-model="login.psw_confirm" show-password></el-input>
         </div>
         <!-- 登录按钮 -->
         <el-button type="primary" @click="btn_tologin">登录</el-button>
@@ -35,13 +30,14 @@
 </template>
 
 <script>
-import { tologin, check_api_token } from "@/api/http";
+import {register_user} from '@/api/http'
 export default {
   data() {
     return {
-      login: {
-        username: "",
-        psw: ""
+      login:{
+         username: "",
+          psw: "",
+          psw_confirm:''
       },
       confirm: "",
       // 正则控制
@@ -54,29 +50,27 @@ export default {
     // 点击登录按钮
     async btn_tologin() {
       let data = {
-        username: this.login.username,
-        psw: this.login.psw
-      };
-      console.log(data);
-
-      let aaa = await tologin(data);
-      console.log(aaa);
-      if (aaa.data.code == 0 && aaa.data.state == "success") {
-        window.sessionStorage.setItem("token", aaa.data.token);
-        this.$message.success('登录成功!')
-        this.$router.replace("/");
-      }else{
-        this.$message.warning(aaa.data.results.message)
+        username : this.login.username,
+        psw : this.login.psw,
+        psw_confirm : this.login.psw_confirm,
+        
       }
-    }
+      console.log(data);
+      
+      let aaa = await register_user(data)
+      console.log(aaa);
+      
+    },
   },
-  watch: {},
+  watch: {
+   
+  },
   components: {}
 };
 </script>
 
 <style scoped lang="less">
-@import url("../../static/iconfont/iconfont.less");
+@import url("../../../../static/iconfont/iconfont.less");
 // 总体
 .main {
   position: absolute;
@@ -93,7 +87,7 @@ export default {
     position: absolute;
     top: 50%;
     transform: translateY(-55%);
-    right: 16%;
+    right: 35%;
     padding: 63px 62px 83px 62px;
     box-sizing: border-box;
     // 标题

@@ -4,6 +4,8 @@ import VueRouter from 'vue-router';
 import Login from '../pages/login/login.vue';
 import Main from '../pages/main/main.vue'
 import home from '../pages/main/children/home/home.vue'
+import to_register from '../pages/main/children/to_register/to_register.vue'
+import to_update_psw from '../pages/main/children/to_update_psw/to_update_psw.vue'
 
 
 
@@ -21,6 +23,14 @@ const Router = new VueRouter({
                 {
                     path:'home',
                     component:home
+                },
+                {
+                    path:'to_register',
+                    component:to_register
+                },
+                {
+                    path:'to_update_psw',
+                    component:to_update_psw
                 },
                 {
                     path: '',
