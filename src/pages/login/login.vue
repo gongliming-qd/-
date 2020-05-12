@@ -9,21 +9,21 @@
       <div class="body">
         <!-- 账号 -->
         <div class="common zhanhao">
-          <span class="iconfont icon-iconzh1" :class=" icon_admin == true? 'select':''"></span>
+          <span class="iconfont icon-iconzh1" :class="class_icon.icon_username == true? 'select':''"></span>
           <el-input placeholder="请输入账号" v-model="login.username" clearable></el-input>
         </div>
         <!-- 密码 -->
         <div class="common password">
-          <span class="iconfont" :class="icon_psw == true? 'select icon-mima':'icon-mima1'"></span>
+          <span class="iconfont" :class="class_icon.icon_psw == true? 'select icon-mima':'icon-mima1'"></span>
           <el-input placeholder="请输入密码" v-model="login.psw" show-password></el-input>
         </div>
         <!-- 验证码 -->
         <div class="common confirm">
-          <span class="iconfont icon-anquan" :class="icon_confirm == true? 'select':''"></span>
-          <el-input placeholder="请输入验证码" v-model="confirm"></el-input>
+          <span class="iconfont icon-anquan" :class="class_icon.icon_confirm == true? 'select':''"></span>
+          <el-input placeholder="请输入验证码" v-model="login.confirm"></el-input>
           <!-- 验证码图片 -->
-          <div class="img">
-            1234
+          <div class="img" @click="change_confim">
+            {{confirm}}
             <img src alt />
           </div>
         </div>
@@ -39,38 +39,95 @@ import { tologin, check_api_token } from "@/api/http";
 export default {
   data() {
     return {
+      // 1. 登录信息
       login: {
         username: "",
-        psw: ""
+        psw: "",
+        confirm: ""
       },
+      // 2. 验证码
       confirm: "",
-      // 正则控制
-      icon_admin: false,
-      icon_psw: false,
-      icon_confirm: false
+      // 3. 控制样式
+      class_icon: {
+        icon_username: false,
+        icon_psw: false,
+        icon_confirm: false
+      }
     };
   },
+  created(){
+    this.change_confim()
+  },
   methods: {
-    // 点击登录按钮
+    // 1. 点击登录按钮
     async btn_tologin() {
+      // 1.验证格式
+      if(this.login.username == ''){
+        this.$message.warning("请输入账号!");
+        this.change_confim()
+        return 
+      }
+      if(this.login.psw == ''){
+        this.$message.warning("请输入密码!");
+        this.change_confim()
+        return 
+      }
+      if(this.confirm != this.login.confirm){
+        this.$message.warning("验证码不正确!");
+        this.change_confim()
+        return 
+      }
+      // 2. 整理请求参数
       let data = {
         username: this.login.username,
         psw: this.login.psw
       };
       console.log(data);
-
       let aaa = await tologin(data);
       console.log(aaa);
       if (aaa.data.code == 0 && aaa.data.state == "success") {
+        // 3. 存储token
         window.sessionStorage.setItem("token", aaa.data.token);
-        this.$message.success('登录成功!')
+        this.$message.success("登录成功!");
         this.$router.replace("/");
-      }else{
-        this.$message.warning(aaa.data.results.message)
+      } else {
+        this.$message.warning(aaa.data.results.message);
+      }
+    },
+    // 2. 变换验证码数字
+    change_confim(){
+      this.confirm = Math.random().toString(36).substr(2).slice(1,5)
+    }
+  },
+  watch: {
+    // 1. 监听账号
+    "login.username"() {
+      if (this.login.username.length > 0) {
+        this.class_icon.icon_username = true
+      }
+      if (this.login.username.length == 0) {
+        this.class_icon.icon_username = false
+      }
+    },
+    // 2. 监听密码
+    "login.psw"() {
+      if (this.login.psw.length > 0) {
+        this.class_icon.icon_psw = true
+      }
+      if (this.login.psw.length == 0) {
+        this.class_icon.icon_psw = false
+      }
+    },
+    // 3. 监听验证码
+    "login.confirm"() {
+      if (this.login.confirm.length > 0) {
+        this.class_icon.icon_confirm = true
+      }
+      if (this.login.confirm.length == 0) {
+        this.class_icon.icon_confirm = false
       }
     }
   },
-  watch: {},
   components: {}
 };
 </script>
@@ -84,6 +141,7 @@ export default {
   top: 0;
   bottom: 0;
   right: 0;
+  background-color: black;
   // 登录界面
   .login {
     width: 590px;
@@ -163,6 +221,7 @@ export default {
           align-items: center;
           justify-content: center;
           color: white;
+          cursor: pointer;
         }
       }
     }

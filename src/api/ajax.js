@@ -20,7 +20,7 @@ export const http = axios.create({
 // 添加请求拦截器
 http.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
-    config.headers.Authorization = window.sessionStorage.getItem('token')||''
+    config.headers.Authorization = window.sessionStorage.getItem('token')||'hello_world'
     return config
   });
 

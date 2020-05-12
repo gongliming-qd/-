@@ -71,7 +71,7 @@ export default {
       console.log(aaa);
     },
     router_push(path) {
-      this.$router.push("/main" + path);
+      this.$router.replace("/main" + path);
     }
   },
   components: {}

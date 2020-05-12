@@ -73,11 +73,8 @@ export default {
 @import url("../../../../static/iconfont/iconfont.less");
 // 总体
 .main {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
+  position: relative;
+  width: 100%;
   // 登录界面
   .login {
     width: 590px;
@@ -86,7 +83,6 @@ export default {
     border-radius: 10px;
     position: absolute;
     top: 50%;
-    transform: translateY(-55%);
     right: 35%;
     padding: 63px 62px 83px 62px;
     box-sizing: border-box;
