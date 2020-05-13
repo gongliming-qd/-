@@ -21,7 +21,6 @@
         <div class="common confirm">
           <span class="iconfont icon-anquan" :class="class_icon.icon_confirm == true? 'select':''"></span>
           <el-input placeholder="请输入验证码" v-model="login.confirm"></el-input>
-          <!-- 验证码图片 -->
           <div class="img" @click="change_confim">
             {{confirm}}
             <img src alt />
@@ -30,6 +29,10 @@
         <!-- 登录按钮 -->
         <el-button type="primary" @click="btn_tologin">登录</el-button>
       </div>
+    </div>
+    <!-- 底部logo遮住 -->
+    <div class="shadow_logo">
+      Copyright©1998-2018 Tencent Inc. All Rights Reserved. 腾讯公司计费平台部 版权所有
     </div>
   </div>
 </template>
@@ -63,17 +66,17 @@ export default {
     async btn_tologin() {
       // 1.验证格式
       if(this.login.username == ''){
-        this.$message.warning("请输入账号!");
+        this.$message.warning("请输入账号哦(*^▽^*)!");
         this.change_confim()
         return 
       }
       if(this.login.psw == ''){
-        this.$message.warning("请输入密码!");
+        this.$message.warning("请输入密码哦(*^▽^*)!");
         this.change_confim()
         return 
       }
       if(this.confirm != this.login.confirm){
-        this.$message.warning("验证码不正确!");
+        this.$message.warning("验证码不正确哦(*^▽^*)!");
         this.change_confim()
         return 
       }
@@ -88,7 +91,7 @@ export default {
       if (aaa.data.code == 0 && aaa.data.state == "success") {
         // 3. 存储token
         window.sessionStorage.setItem("token", aaa.data.token);
-        this.$message.success("登录成功!");
+        this.$message.success(this.login.username + '同学,登录成功哦(*^▽^*)!!!');
         this.$router.replace("/");
       } else {
         this.$message.warning(aaa.data.results.message);
@@ -141,12 +144,13 @@ export default {
   top: 0;
   bottom: 0;
   right: 0;
+  background: url('../../static/imgs/login/bg1.jpg') center center repeat-x;
   background-color: black;
   // 登录界面
   .login {
     width: 590px;
     height: 536px;
-    background: #cfe8fc;
+    background: #080808;
     border-radius: 10px;
     position: absolute;
     top: 50%;
@@ -225,6 +229,18 @@ export default {
         }
       }
     }
+  }
+  .shadow_logo{
+    width: 100%;
+    height: 80px;
+    position: absolute;
+    background-color: black;
+    left: 0;bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
   }
 }
 </style>

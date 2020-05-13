@@ -6,6 +6,7 @@ import Main from '../pages/main/main.vue'
 import home from '../pages/main/children/home/home.vue'
 import to_register from '../pages/main/children/to_register/to_register.vue'
 import to_update_psw from '../pages/main/children/to_update_psw/to_update_psw.vue'
+import admin_set from '../pages/main/children/user_power/admin_set.vue'
 
 
 
@@ -31,6 +32,10 @@ const Router = new VueRouter({
                 {
                     path:'to_update_psw',
                     component:to_update_psw
+                },
+                {
+                    path:'admin_set',
+                    component:admin_set
                 },
                 {
                     path: '',

@@ -1,7 +1,7 @@
 <template>
  <div class="main">
-     <el-input v-model.trim="input" placeholder="请输入搜索内容" @keyup.enter.native="change"></el-input>
-     <span class="search_btn" @click="change">搜索</span>
+     <el-input v-model.trim="input" placeholder="请输入搜索内容" @keyup.enter.native="change" class="input-with-select"></el-input>
+     <span class="search_btn el-icon-search"  @click="change" ></span>
  </div>
 </template>
 
@@ -12,12 +12,14 @@
          input:''
      }
    },
-//    mychange : 发送搜索事件
-   props:['mychange'],
+   props:['search'],
    methods: {
        change(){
-           this.mychange(this.input)
+         this.$emit('click_search', this.input)
        }
+   },
+   created(){
+     this.input = this.search
    },
    components: {
        
@@ -46,7 +48,7 @@
     font-size: 14px;
   }
   /deep/.el-input__inner{
-      height: 30px;
+      height: 40px;
   }
 }
  

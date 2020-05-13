@@ -3,10 +3,7 @@
     <!-- 横线 -->
     <span class="line"></span>
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item>{{title1}}</el-breadcrumb-item>
-      <el-breadcrumb-item>{{title2}}</el-breadcrumb-item>
-      <el-breadcrumb-item>{{title3}}</el-breadcrumb-item>
-      <el-breadcrumb-item v-if="title4">{{title4}}</el-breadcrumb-item>
+      <el-breadcrumb-item v-for="(item, index) in title" :key="index">{{item}}</el-breadcrumb-item>
     </el-breadcrumb>
   </div>
 </template>
@@ -17,19 +14,9 @@ export default {
     return {};
   },
   props: {
-    title1:{
-      type:String
+    title:{
+      type:Array
     },
-    title2:{
-      type:String
-    },
-    title3:{
-      type:String
-    },
-    title4:{
-      default:'',
-      type:String
-    }
   }
 };
 </script>

@@ -1,4 +1,7 @@
 <template>
+<div>
+  <!-- 顶部面包屑 -->
+   <breadnav :title="breadnav.title"/>
   <!-- 总体 -->
   <div class="main">
     <!-- 登录界面 -->
@@ -27,13 +30,19 @@
       </div>
     </div>
   </div>
+</div>
+  
 </template>
 
 <script>
 import {register_user} from '@/api/http'
+import breadnav from '@/components/breadNav/breadnav'
 export default {
   data() {
     return {
+       breadnav:{
+         title:['用户操作','注册用户']
+       },
       login:{
          username: "",
           psw: "",
@@ -65,7 +74,9 @@ export default {
   watch: {
    
   },
-  components: {}
+   components: {
+      breadnav
+   }
 };
 </script>
 

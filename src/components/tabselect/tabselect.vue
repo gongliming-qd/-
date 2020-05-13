@@ -1,6 +1,7 @@
 <template>
-  <div class="main">
+  <div class="_tabselect_main">
     <div
+      class="one_secect"
       v-for="(item, index) in list_data"
       :class="index==select_index? 'select':''"
       :key="index"
@@ -17,13 +18,12 @@ export default {
     };
   },
   props: {
-    list_data: { type: Array },  // 传递的数据列表
-    tabaction: { type: Function } // 更改选择的参数
+    list_data: { type: Array } // 传递的数据列表
   },
   methods: {
     select_btn(index) {
-      this.select_index = index;  // 更改当前组件的下标
-      this.tabaction(index);  // 当前选择的下标传递给外界
+      this.select_index = index; // 更改当前组件的下标
+      this.$emit("action_select", index);
     }
   },
   components: {}
@@ -31,22 +31,34 @@ export default {
 </script>
 
 <style scoped lang="less">
-.main {
-    margin-top: 10px;
+._tabselect_main {
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  .one_secect{
+    margin-right: 60px;
+    &:last-child{
+      margin-right: 0px;
+    }
+  }
   > div {
     padding: 11px 14px;
-    border-bottom: 2px solid white;
-    margin-right: 8px;
+    border-bottom: 2px solid transparent;
     cursor: pointer;
     font-size: 14px;
     font-family: Microsoft YaHei;
     font-weight: 400;
-    color: rgba(61, 64, 71, 1);
+    color: white;
+    transition: all 0.4s;
+    &:hover{
+      border-bottom: 2px solid #47a4ff;
+    color: #47a4ff;
+    }
   }
   .select {
     border-bottom: 2px solid #47a4ff;
+    color: #47a4ff;
   }
 }
 </style>
