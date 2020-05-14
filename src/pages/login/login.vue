@@ -32,7 +32,8 @@
     </div>
     <!-- 底部logo遮住 -->
     <div class="shadow_logo">
-      Copyright©1998-2018 Tencent Inc. All Rights Reserved. 腾讯公司计费平台部 版权所有
+      <!-- Copyright©1998-2018 Tencent Inc. All Rights Reserved. 腾讯公司计费平台部 版权所有 -->
+For personal notes to learn personal website. 后台笔记个人网站 版权专属
     </div>
   </div>
 </template>
