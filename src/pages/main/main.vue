@@ -6,15 +6,14 @@
       <div class="right_menu">
         <!-- 横向导航 -->
         <div class="list_menu">
-              <tabselect :list_data="heng_menu.list_data" @action_select="action_select"/>
+          <tabselect :index="count_tableselect_index" :list_data="heng_menu.list_data" @action_select="action_select" />
         </div>
         <!-- 登录头像 -->
         <div class="login_img" @mouseenter="enter_menu()" @mouseleave="out_menu()">
           <img src="../../static/imgs/main/index/user.png" alt />
           <!-- 子菜单 -->
           <div class="sun_two" v-if="main_img.sum_isshow">
-            <div class="sanjiao">
-            </div>
+            <div class="sanjiao"></div>
             <div class="nihao">
               <div class="sun_two_son" @click.stop="click_to_me">个人中心</div>
               <div class="sun_two_son" style="marginTop:8px" @click.stop="click_to_login">退出</div>
@@ -23,42 +22,13 @@
         </div>
       </div>
     </div>
-    <!-- 导航和主内容 -->
-    <div class="main">
-      <div class="menu_left">
-        <el-menu
-          default-active="1"
-          class="el-menu-vertical-demo"
-          background-color="black"
-          text-color="#fff"
-          active-text-color="#ffd04b"
-        >
-          <el-submenu :index="index+''" v-for="(ele,index) in menu_list" :key="index">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>{{ele.title}}</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item
-                @click="router_push(item.path)"
-                v-for="(item, index1) in ele.children"
-                :key="index1+''+index"
-                :index="index+'-'+index1"
-              >{{item.name}}</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
-        </el-menu>
-      </div>
-      <div class="box_right">
-        <router-view></router-view>
-      </div>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import { get_family_all } from "@/api/http";
-import tabselect from '../../components/tabselect/tabselect'
+import tabselect from "@/components/tabselect/tabselect";
 export default {
   data() {
     return {
@@ -67,30 +37,31 @@ export default {
         sum_isshow: false
       },
       // 横向菜单
-      heng_menu:{
-         list_data:['首页','资产治理','数据治理','个人中心']
+      heng_menu: {
+        list_data: ["首页", "数据质量", "个人中心"],
+        list_data_path:['home','data_quality','person_set']
       },
-      // 竖向菜单
-      menu_list: [
-        {
-          title: "用户操作",
-          children: [
-            { path: "/to_register", name: "注册用户" },
-            { path: "/to_update_psw", name: "修改密码" }
-          ]
-        },
-        {
-          title: "权限管理",
-          children: [
-            { path: "/admin_set", name: "超级管理员" },
-            { path: "/to_update_psw", name: "普通管理员" }
-          ]
-        }
-      ]
+      
     };
   },
   created() {
     this.init_get_data();
+    console.log(this.$route.path);
+    
+  },
+  computed:{
+    count_tableselect_index(){
+      if(this.$route.path.includes('/main/person_set')){
+        return 2
+      }
+       if(this.$route.path.includes('/main/xxx')){
+        return 1
+      }
+       if(this.$route.path.includes('/main/home')){
+        return 0
+      }
+      
+    }
   },
   methods: {
     async init_get_data() {
@@ -98,8 +69,13 @@ export default {
       console.log(aaa);
     },
     //顶部导航---------------------------------------------------------------------------------------
-    action_select(index){
-        console.log(index);
+    action_select(index) {
+      // 1. 修改顶部横向导航
+      if(index == 0){
+        this.$router.push("/home");
+      }else{
+      this.$router.push("/main/"+ this.heng_menu.list_data_path[index]);
+      }
     },
     // 4. 鼠标移入
     enter_menu() {
@@ -120,11 +96,9 @@ export default {
     // 去个人中心
     click_to_me() {},
     //顶部导航---------------------------------------------------------------------------------------
-    router_push(path) {
-      this.$router.replace("/main" + path);
-    }
+   
   },
-  components: {tabselect}
+  components: { tabselect }
 };
 </script>
 
@@ -205,28 +179,6 @@ export default {
     }
   }
 }
-// 导航和主内容
-.main {
-  position: absolute;
-  left: 0;
-  top: 60px;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: space-between;
 
-  .menu_left {
-    height: 100%;
-    width: 250px;
-    background-color: black;
-    padding: 2px;
-    box-sizing: border-box;
-  }
-  .box_right {
-    flex: 1;
-    height: 100%;
-    background-color: #f5f7f9;
-  }
-}
 </style>
 

@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import url("../../../../static/iconfont/iconfont.less");
+@import url("../../../../../../static/iconfont/iconfont.less");
 // 总体
 .main {
   position: relative;

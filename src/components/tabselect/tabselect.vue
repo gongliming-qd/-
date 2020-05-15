@@ -18,13 +18,17 @@ export default {
     };
   },
   props: {
-    list_data: { type: Array } // 传递的数据列表
+    list_data: { type: Array }, // 传递的数据列表
+    index:Number
   },
   methods: {
     select_btn(index) {
       this.select_index = index; // 更改当前组件的下标
       this.$emit("action_select", index);
     }
+  },
+  created(){
+    this.select_index = this.index || 0
   },
   components: {}
 };
