@@ -92,6 +92,9 @@ export default {
       if (aaa.data.code == 0 && aaa.data.state == "success") {
         // 3. 存储token
         window.sessionStorage.setItem("token", aaa.data.token);
+        // 4. 存储个人信息在vuex中
+        localStorage.setItem("username", this.login.username)
+
         this.$message.success(this.login.username + '同学,登录成功哦(*^▽^*)!!!');
         this.$router.replace("/");
       } else {

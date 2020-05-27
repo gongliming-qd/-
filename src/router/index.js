@@ -15,7 +15,7 @@ import Home from '../pages/home/home.vue'
 
 // person_set ------------------ 
 import person_set from '../pages/main/children/person_set/person_set.vue'
-import to_register from '../pages/main/children/person_set/children/to_register/to_register.vue'
+import to_update_person from '../pages/main/children/person_set/children/to_update_person/to_update_person.vue'
 import to_update_psw from '../pages/main/children/person_set/children/to_update_psw/to_update_psw.vue'
 import admin_set from '../pages/main/children/person_set/children/user_power/admin_set.vue'
 import pt_set from '../pages/main/children/person_set/children/pt_set/pt_set.vue'
@@ -37,8 +37,8 @@ const Router = new VueRouter({
                     path: 'person_set',
                     component: person_set,
                     children: [{
-                            path: 'to_register',
-                            component: to_register
+                            path: 'to_update_person',
+                            component: to_update_person
                         },
                         {
                             path: 'to_update_psw',
@@ -54,7 +54,7 @@ const Router = new VueRouter({
                         },
                         {
                             path: '',
-                            redirect: 'to_register'
+                            redirect: 'to_update_person'
                         }
                     ]
                 },
@@ -62,8 +62,8 @@ const Router = new VueRouter({
                     path: 'home',
                     component: person_set,
                     children: [{
-                            path: 'to_register',
-                            component: to_register
+                            path: 'to_update_person',
+                            component: to_update_person
                         },
                         {
                             path: 'to_update_psw',
@@ -79,7 +79,7 @@ const Router = new VueRouter({
                         },
                         {
                             path: '',
-                            redirect: 'to_register'
+                            redirect: 'to_update_person'
                         }
                     ]
                 },
@@ -87,8 +87,8 @@ const Router = new VueRouter({
                     path: 'data_quality',
                     component: person_set,
                     children: [{
-                            path: 'to_register',
-                            component: to_register
+                            path: 'to_update_person',
+                            component: to_update_person
                         },
                         {
                             path: 'to_update_psw',
@@ -104,7 +104,7 @@ const Router = new VueRouter({
                         },
                         {
                             path: '',
-                            redirect: 'to_register'
+                            redirect: 'to_update_person'
                         }
                     ]
                 },
