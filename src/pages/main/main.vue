@@ -10,7 +10,7 @@
         </div>
         <!-- 登录头像 -->
         <div class="login_img" @mouseenter="enter_menu()" @mouseleave="out_menu()">
-          <img src="../../static/imgs/main/index/user.png" alt />
+          <img :src="count_img"/>
           <!-- 子菜单 -->
           <div class="sun_two" v-if="main_img.sum_isshow">
             <div class="sanjiao"></div>
@@ -61,6 +61,19 @@ export default {
         return 0
       }
       
+    },
+    // 1. 控制头像
+    count_img() {
+      if (process.env.NODE_ENV === "development") {
+        return (
+          "http://127.0.0.1:8000/api/get_img/?img_name=" +
+          (this.$store.state.user.avatar_address || 'default_one.jpg')
+        );
+      } else {
+        return (
+          "/api/get_img/?img_name=" + (this.$store.state.user.avatar_address || 'default_one.jpg')
+        );
+      }
     }
   },
   methods: {

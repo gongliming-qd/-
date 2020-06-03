@@ -15,10 +15,10 @@ import Home from '../pages/home/home.vue'
 
 // person_set ------------------ 
 import person_set from '../pages/main/children/person_set/person_set.vue'
-import to_update_person from '../pages/main/children/person_set/children/to_update_person/to_update_person.vue'
-import to_update_psw from '../pages/main/children/person_set/children/to_update_psw/to_update_psw.vue'
-import admin_set from '../pages/main/children/person_set/children/user_power/admin_set.vue'
-import pt_set from '../pages/main/children/person_set/children/pt_set/pt_set.vue'
+import to_update_person from '../pages/main/children/person_set/children/to_update_person.vue'
+
+import admin_set from '../pages/main/children/person_set/children/admin_set.vue'
+import pt_set from '../pages/main/children/person_set/children/pt_set.vue'
 // person_set ------------------ 
 
 Vue.use(VueRouter)
@@ -39,10 +39,6 @@ const Router = new VueRouter({
                     children: [{
                             path: 'to_update_person',
                             component: to_update_person
-                        },
-                        {
-                            path: 'to_update_psw',
-                            component: to_update_psw
                         },
                         {
                             path: 'admin_set',
@@ -66,10 +62,6 @@ const Router = new VueRouter({
                             component: to_update_person
                         },
                         {
-                            path: 'to_update_psw',
-                            component: to_update_psw
-                        },
-                        {
                             path: 'admin_set',
                             component: admin_set
                         },
@@ -89,10 +81,6 @@ const Router = new VueRouter({
                     children: [{
                             path: 'to_update_person',
                             component: to_update_person
-                        },
-                        {
-                            path: 'to_update_psw',
-                            component: to_update_psw
                         },
                         {
                             path: 'admin_set',

@@ -22,6 +22,9 @@ export const check_api_token = (data)=>{
 export const get_userinfo_by_username = (data)=>{
     return http.get('/api/get_userinfo_by_username/',{params:data})
 }
+export const update_userinfo_by_id = (data)=>{
+    return http.post('/api/update_userinfo_by_id/',data)
+}
 
 
 

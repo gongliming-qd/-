@@ -9,12 +9,18 @@
       <div class="body">
         <!-- 账号 -->
         <div class="common zhanhao">
-          <span class="iconfont icon-iconzh1" :class="class_icon.icon_username == true? 'select':''"></span>
+          <span
+            class="iconfont icon-iconzh1"
+            :class="class_icon.icon_username == true? 'select':''"
+          ></span>
           <el-input placeholder="请输入账号" v-model="login.username" clearable></el-input>
         </div>
         <!-- 密码 -->
         <div class="common password">
-          <span class="iconfont" :class="class_icon.icon_psw == true? 'select icon-mima':'icon-mima1'"></span>
+          <span
+            class="iconfont"
+            :class="class_icon.icon_psw == true? 'select icon-mima':'icon-mima1'"
+          ></span>
           <el-input placeholder="请输入密码" v-model="login.psw" show-password></el-input>
         </div>
         <!-- 验证码 -->
@@ -33,13 +39,13 @@
     <!-- 底部logo遮住 -->
     <div class="shadow_logo">
       <!-- Copyright©1998-2018 Tencent Inc. All Rights Reserved. 腾讯公司计费平台部 版权所有 -->
-For personal notes to learn personal website. 后台笔记个人网站 版权专属
+      For personal notes to learn personal website. 后台笔记个人网站 版权专属
     </div>
   </div>
 </template>
 
 <script>
-import { tologin, check_api_token } from "@/api/http";
+import { tologin, get_userinfo_by_username } from "@/api/http";
 export default {
   data() {
     return {
@@ -56,30 +62,32 @@ export default {
         icon_username: false,
         icon_psw: false,
         icon_confirm: false
-      }
+      },
+      index: -1
     };
   },
-  created(){
-    this.change_confim()
+  created() {
+    this.change_confim();
   },
+  components: {},
   methods: {
     // 1. 点击登录按钮
     async btn_tologin() {
       // 1.验证格式
-      if(this.login.username == ''){
+      if (this.login.username == "") {
         this.$message.warning("请输入账号哦(*^▽^*)!");
-        this.change_confim()
-        return 
+        this.change_confim();
+        return;
       }
-      if(this.login.psw == ''){
+      if (this.login.psw == "") {
         this.$message.warning("请输入密码哦(*^▽^*)!");
-        this.change_confim()
-        return 
+        this.change_confim();
+        return;
       }
-      if(this.confirm != this.login.confirm){
+      if (this.confirm != this.login.confirm) {
         this.$message.warning("验证码不正确哦(*^▽^*)!");
-        this.change_confim()
-        return 
+        this.change_confim();
+        return;
       }
       // 2. 整理请求参数
       let data = {
@@ -93,49 +101,60 @@ export default {
         // 3. 存储token
         window.sessionStorage.setItem("token", aaa.data.token);
         // 4. 存储个人信息在vuex中
-        localStorage.setItem("username", this.login.username)
+        localStorage.setItem("username", this.login.username);
 
-        this.$message.success(this.login.username + '同学,登录成功哦(*^▽^*)!!!');
+        // 5. 请求个人数据
+        let data2 = {
+          username: this.login.username
+        };
+        let bbb = await get_userinfo_by_username(data2);
+        this.$store.dispatch("set_user", bbb.data.results[0]);
+
+        this.$message.success(
+          this.login.username + "同学,登录成功哦(*^▽^*)!!!"
+        );
         this.$router.replace("/");
       } else {
         this.$message.warning(aaa.data.results.message);
       }
     },
     // 2. 变换验证码数字
-    change_confim(){
-      this.confirm = Math.random().toString(36).substr(2).slice(1,5)
+    change_confim() {
+      this.confirm = Math.random()
+        .toString(36)
+        .substr(2)
+        .slice(1, 5);
     }
   },
   watch: {
     // 1. 监听账号
     "login.username"() {
       if (this.login.username.length > 0) {
-        this.class_icon.icon_username = true
+        this.class_icon.icon_username = true;
       }
       if (this.login.username.length == 0) {
-        this.class_icon.icon_username = false
+        this.class_icon.icon_username = false;
       }
     },
     // 2. 监听密码
     "login.psw"() {
       if (this.login.psw.length > 0) {
-        this.class_icon.icon_psw = true
+        this.class_icon.icon_psw = true;
       }
       if (this.login.psw.length == 0) {
-        this.class_icon.icon_psw = false
+        this.class_icon.icon_psw = false;
       }
     },
     // 3. 监听验证码
     "login.confirm"() {
       if (this.login.confirm.length > 0) {
-        this.class_icon.icon_confirm = true
+        this.class_icon.icon_confirm = true;
       }
       if (this.login.confirm.length == 0) {
-        this.class_icon.icon_confirm = false
+        this.class_icon.icon_confirm = false;
       }
     }
-  },
-  components: {}
+  }
 };
 </script>
 
@@ -148,7 +167,7 @@ export default {
   top: 0;
   bottom: 0;
   right: 0;
-  background: url('../../static/imgs/login/bg1.jpg') center center repeat-x;
+  background: url("../../static/imgs/login/bg1.jpg") center center repeat-x;
   background-color: black;
   // 登录界面
   .login {
@@ -234,12 +253,13 @@ export default {
       }
     }
   }
-  .shadow_logo{
+  .shadow_logo {
     width: 100%;
     height: 80px;
     position: absolute;
     background-color: black;
-    left: 0;bottom: 0;
+    left: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;

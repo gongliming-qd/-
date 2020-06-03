@@ -44,7 +44,6 @@ export default {
           title: "用户操作",
           children: [
             { path: "/person_set/to_update_person", name: "修改信息" },
-            { path: "/person_set/to_update_psw", name: "修改密码" }
           ]
         },
         {

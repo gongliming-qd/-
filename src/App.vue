@@ -15,6 +15,8 @@ export default {
         username: localStorage.getItem("username")
       };
       let aaa = await get_userinfo_by_username(data);
+      console.log(aaa);
+      
       this.$store.dispatch("set_user", aaa.data.results[0]);
     }
   },
