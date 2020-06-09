@@ -145,7 +145,7 @@ export default {
       breadnav: {
         title: ["个人中心", "权限管理", "管理人页面"]
       },
-      // 新增搜索按钮部分
+      // 新增/ 搜索按钮部分
       add_search: {
         search: "",
         options: [
@@ -155,14 +155,10 @@ export default {
           },
           {
             value: "1",
-            label: "超级管理员"
+            label: "管理员"
           },
           {
             value: "2",
-            label: "开发人员"
-          },
-          {
-            value: "3",
             label: "普通用户"
           }
         ],

@@ -50,6 +50,7 @@ export default {
     
   },
   computed:{
+    // 样式 : tab选项的选中状态颜色
     count_tableselect_index(){
       if(this.$route.path.includes('/main/person_set')){
         return 2

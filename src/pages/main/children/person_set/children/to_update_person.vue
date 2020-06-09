@@ -5,7 +5,7 @@
     <!-- 修改按钮 -->
     <div>
       <el-button type="primary" style="marginLeft:25px; marginTop:10px" @click="open_update">修改信息</el-button>
-      <el-button type="primary" style="marginLeft:25px; marginTop:10px">修改密码</el-button>
+      <el-button type="primary" style="marginLeft:25px; marginTop:10px" @click="open_up_psw">修改密码</el-button>
     </div>
     <!-- 用户信息展示 -->
     <div class="form_main_update">
@@ -73,13 +73,58 @@
         </div>
       </el-drawer>
     </div>
+    <!-- 修改密码模态框 -->
+    <div>
+      <el-drawer
+        :title="'修改密码'"
+        :visible.sync="up_psw_add.is_show"
+        direction="rtl"
+        custom-class="demo-drawer"
+        ref="drawer"
+        size="50%"
+      >
+        <div class="in_form_class">
+          <el-form :model="up_psw_add" status-icon label-width="100px">
+            <el-form-item label="原密码">
+              <el-input
+                show-password
+                v-model="up_psw_add.form_data.odd_psw"
+                placeholder="请输入密码"
+                style="width:350px"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="新密码">
+              <el-input
+                show-password
+                v-model="up_psw_add.form_data.new_psw"
+                placeholder="请输入密码"
+                style="width:350px"
+              ></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码">
+              <el-input
+                v-model="up_psw_add.form_data.psw_confirm"
+                show-password
+                placeholder="请输入确认密码"
+                style="width:350px"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+          <div class="btn_set">
+            <el-button style="marginRight:150px" @click="up_psw_add.is_show=false">取消</el-button>
+            <el-button @click="up_psw_confirm" type="primary">修改</el-button>
+          </div>
+        </div>
+      </el-drawer>
+    </div>
   </div>
 </template>
 
 <script>
 import breadnav from "@/components/breadNav/breadnav";
-import { get_userinfo_by_username, update_userinfo_by_id } from "@/api/http";
+import { get_userinfo_by_username, update_userinfo_by_id, update_userpws_by_id } from "@/api/http";
 import axios from "axios";
+
 
 export default {
   data() {
@@ -88,7 +133,7 @@ export default {
       breadnav: {
         title: ["个人中心", "用户操作", "修改信息"]
       },
-
+      // 修改用户信息部分
       update_add: {
         is_show: false,
         form_data: {
@@ -97,6 +142,17 @@ export default {
           label: "",
           zancun_img: ""
         }
+      },
+      // 修改密码部分
+      // 新增和修改部分
+      up_psw_add: {
+        is_show: false,
+        form_data: {
+          id: "",
+          odd_psw: "",
+          new_psw:"",
+          psw_confirm: ""
+        },
       }
     };
   },
@@ -182,11 +238,61 @@ export default {
       console.log(aaa);
 
       this.$store.dispatch("set_user", aaa.data.results[0]);
-    }
+    },
+    // 修改密码部分--------------------------------------------------------------------
+    // 1. 打开模态框
+    open_up_psw(){
+      this.up_psw_add.is_show = true
+
+      // 1. 清空数据 
+      this.up_psw_add.form_data = {
+          id: this.$store.state.user.id,
+          odd_psw: "",
+          new_psw:"",
+          psw_confirm: ""
+      }
+    },
+    // 2. 点击修改密码
+     async up_psw_confirm(){
+       // 1. 验证数据信息
+       if(this.up_psw_add.form_data.odd_psw == ''){
+         this.$message.warning('旧密码不能为空哦(*^▽^*)!!!');
+       }
+       if(this.up_psw_add.form_data.new_psw == ''){
+         this.$message.warning('新密码不能为空哦(*^▽^*)!!!');
+       }
+       if(this.up_psw_add.form_data.psw_confirm == ''){
+         this.$message.warning('确认密码不能为空哦(*^▽^*)!!!');
+       }
+       if(this.up_psw_add.form_data.psw_confirm != this.up_psw_add.form_data.new_psw){
+         this.$message.warning('新密码和确认密码不一致哦(*^▽^*)!!!');
+       }
+       let data = {...this.up_psw_add.form_data}
+       console.log(data);
+       let aaa = await update_userpws_by_id(data)
+        console.log(aaa);
+        if(aaa.data.results.message == '修改成功!!'){
+         this.$message.success('修改成功哦(*^▽^*)!!!');
+         setTimeout(()=>{
+         this.$message.success('请重新登录哦!!(*^▽^*)!!!');
+         // 删除token
+        window.sessionStorage.setItem("token", 'hello_world');
+         this.$router.replace('/login')
+         },500)
+        }
+        if(aaa.data.results.message == '"密码不正确"'){
+         this.$message.error('密码不正确哦(*^▽^*)!!!');
+        }
+     },
+    // 修改密码部分--------------------------------------------------------------------
+
+
   },
   created() {},
   components: {
     breadnav
+  },
+  mounted(){
   }
 };
 </script>
@@ -259,6 +365,23 @@ export default {
     width: 100px;
     height: 100px;
     border-radius: 50%;
+  }
+}
+// 修改密码模态框
+.in_form_class {
+  padding: 20px 125px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .btn_set {
+    margin-top: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
   }
 }
 </style>

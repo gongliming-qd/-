@@ -57,13 +57,13 @@ export default {
       },
       // 2. 验证码
       confirm: "",
+
       // 3. 控制样式
       class_icon: {
         icon_username: false,
         icon_psw: false,
         icon_confirm: false
       },
-      index: -1
     };
   },
   created() {

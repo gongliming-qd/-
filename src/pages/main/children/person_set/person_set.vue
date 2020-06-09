@@ -10,20 +10,24 @@
           text-color="#fff"
           active-text-color="#ffd04b"
         >
-          <el-submenu :index="index+''" v-for="(ele,index) in menu_list" :key="index">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>{{ele.title}}</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item
-                @click="router_push(item.path)"
-                v-for="(item, index1) in ele.children"
-                :key="index1+''+index"
-                :index="index+'-'+index1"
-              >{{item.name}}</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
+          <div  v-for="(ele,index) in menu_list" :key="index">
+            <el-submenu v-if="ele.limit.includes($store.state.user.weight)" :index="index+''">
+              <template slot="title" >
+                <i class="el-icon-location"></i>
+                <span>{{ele.title}}</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item
+                  @click="router_push(item.path)"
+                  v-for="(item, index1) in ele.children"
+                  :key="index1+''+index"
+                  :index="index+'-'+index1"
+                >
+                  <template v-if="item.limit.includes($store.state.user.weight)">{{item.name}}</template>
+                </el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+          </div>
         </el-menu>
       </div>
       <div class="box_right">
@@ -39,24 +43,14 @@ export default {
   data() {
     return {
       // 竖向菜单
-      menu_list: [
-        {
-          title: "用户操作",
-          children: [
-            { path: "/person_set/to_update_person", name: "修改信息" },
-          ]
-        },
-        {
-          title: "权限管理",
-          children: [
-            { path: "/person_set/admin_set", name: "超级管理员" },
-            { path: "/person_set/pt_set", name: "普通管理员" }
-          ]
-        }
-      ]
+      menu_list: []
     };
   },
-  created() {},
+  created() {
+    // 1. 获取菜单列表
+    this.menu_list = this.$store.state.all_pages_router[2];
+    console.log(this.menu_list);
+  },
   methods: {
     router_push(path) {
       this.$router.replace("/main" + path);

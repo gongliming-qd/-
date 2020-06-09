@@ -12,11 +12,15 @@ export default {
   methods: {
     async get_user() {
       let data = {
-        username: localStorage.getItem("username")
+        username: localStorage.getItem("username")||''
       };
+      // 如果没存储, 那么不请求数据了
+      if(data.username == ''){
+        this.$router.replace('/login')
+        return
+      }
       let aaa = await get_userinfo_by_username(data);
       console.log(aaa);
-      
       this.$store.dispatch("set_user", aaa.data.results[0]);
     }
   },
