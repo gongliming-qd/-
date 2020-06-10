@@ -19,3 +19,15 @@ var gongliming;
 gongliming = ['123', 'woaini', { nihao: 123 }];
 var list = [1, true, "free"];
 console.log(list[2]);
+// viod
+function my_fuc(message) {
+    if (message === void 0) { message = "fuckyou"; }
+    console.log(message);
+}
+my_fuc('I Love You!');
+my_fuc();
+// 断言 as
+var w_string = [1, 2, 3, 4, 5];
+var str_length = w_string.length;
+// let str_length: number = (w_string as string).length
+console.log(str_length);

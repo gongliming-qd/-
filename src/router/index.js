@@ -18,6 +18,7 @@ import person_set from '../pages/main/children/person_set/person_set.vue'
 import to_update_person from '../pages/main/children/person_set/children/to_update_person.vue'
 
 import admin_set from '../pages/main/children/person_set/children/admin_set.vue'
+import my_note from '../pages/main/children/person_set/children/my_note.vue'
 // person_set ------------------ 
 // no_found ------------------ 
 import no_found from '../pages/no_found/no_found.vue'
@@ -52,6 +53,12 @@ const Router = new VueRouter({
                             component: admin_set,
                             meta: {
                                 limit: ['1']
+                            }
+                        },
+                        {
+                            path: 'my_note',
+                            component: my_note,
+                            meta: {
                             }
                         },
                         {
@@ -136,54 +143,14 @@ const Router = new VueRouter({
 })
 
 // 导入vuex
-import vuex from '../store/index'
+// import vuex from '../store/index'
 Router.beforeEach((to, from, next) => {
     console.log(to);
-    console.log(to.meta.limit);
     // 1. 处理用户刷新时, 重新获取用户数据产生的延迟问题
     /**
         原因 : 默认刷新, 会在 App.vue 中重新获取用户信息,然后存储在vuex中, 那么此时刷新不能立即获取到vuex中的数据, 那么需要等到数据获取成功后
         再进行判断该用户是否有权限查看该页面
     **/
-    if (vuex.state.user.weight == '') {
-        setTimeout(() => {
-            // 1.1 重新获取数据后仍为空
-            if (vuex.state.user.weight == '') {
-                Router.push('/login')
-                return
-            } else {
-                // 1.2 判断是否存在limit
-                if (to.meta.limit) {
-                    if (to.meta.limit.includes(vuex.state.user.weight)) {
-                        next()
-                        return
-                    } else {
-                        Router.push('/no_permission')
-                        return
-                    }
-                }
-                // 1.3 不存在limit的话, 直接到对应页面
-                else{
-                    next()
-                }
-            }
-        }, 1000)
-    }
-    // 2. 当用户数据有内容的时候 
-    else {
-        if (to.meta.limit) {
-            if (to.meta.limit.includes(vuex.state.user.weight)) {
-                next()
-                return
-            } else {
-                console.log(to.meta.limit);
-                console.log(vuex.state.user.weight);
-                Router.push('/no_permission')
-                return
-            }
-        } else {
-            next()
-        }
-    }
+   next()
 })
 export default Router

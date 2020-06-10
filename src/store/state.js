@@ -46,12 +46,21 @@ export default {
                     }]
                }
           ],
-          [{
+          [    {
                     title: "用户操作",
                     limit:['1','2'],
                     children: [{
                          path: "/person_set/to_update_person",
                          name: "修改信息",
+                         limit: ['1', '2']
+                    }, ]
+               },
+               {
+                    title: "笔记管理",
+                    limit:['1','2'],
+                    children: [{
+                         path: "/person_set/my_note",
+                         name: "笔记操作",
                          limit: ['1', '2']
                     }, ]
                },

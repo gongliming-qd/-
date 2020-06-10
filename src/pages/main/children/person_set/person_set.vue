@@ -10,9 +10,9 @@
           text-color="#fff"
           active-text-color="#ffd04b"
         >
-          <div  v-for="(ele,index) in menu_list" :key="index">
+          <div v-for="(ele,index) in menu_list" :key="index">
             <el-submenu v-if="ele.limit.includes($store.state.user.weight)" :index="index+''">
-              <template slot="title" >
+              <template slot="title">
                 <i class="el-icon-location"></i>
                 <span>{{ele.title}}</span>
               </template>
@@ -30,7 +30,7 @@
           </div>
         </el-menu>
       </div>
-      <div class="box_right">
+      <div class="box_right" ref="box_right">
         <router-view></router-view>
       </div>
     </div>
@@ -43,7 +43,8 @@ export default {
   data() {
     return {
       // 竖向菜单
-      menu_list: []
+      menu_list: [],
+      clientHeight: ""
     };
   },
   created() {
@@ -52,9 +53,31 @@ export default {
     console.log(this.menu_list);
   },
   methods: {
+    // 1. 切换路由
     router_push(path) {
       this.$router.replace("/main" + path);
-    }
+    },
+    // 2. mounted钩子初始化
+    _mounted_init() {
+      // 1. 获取当前浏览器的高度
+      this.clientHeight = `${document.documentElement.clientHeight}`;
+      // 2. 监听window, 从而控制右边显示内容的高度
+      window.onresize = () => {
+        this.clientHeight = `${document.documentElement.clientHeight}`;
+        if (this.$refs.box_right) {
+          this.$refs.box_right.style.minHeight =
+            parseInt(document.documentElement.clientHeight) - 60 + "px";
+        }
+      };
+    },
+    
+  },
+  mouted() {
+    // 1. 初始化高度
+    this._mounted_init()
+  },
+  watch: {
+    
   },
   components: { tabselect }
 };
@@ -80,7 +103,9 @@ export default {
   }
   .box_right {
     flex: 1;
-    height: 100%;
+    overflow-y: scroll;
+    padding: 20px 25px;
+    box-sizing: border-box;
     background-color: #f5f7f9;
   }
 }
