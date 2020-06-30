@@ -62,6 +62,12 @@ const Router = new VueRouter({
                             }
                         },
                         {
+                            path: 'note_list',
+                            component: () => import('@/pages/main/children/person_set/children/note_list.vue'),
+                            meta: {
+                            }
+                        },
+                        {
                             path: '',
                             redirect: 'to_update_person'
                         }

@@ -72,6 +72,10 @@ function createSquare(config) {
 }
 var mySquare = createSquare({ color: "black" });
 console.log(mySquare);
+var mySearch;
+mySearch = function (source, subString) {
+    return source.search(subString) !== -1;
+};
 var obj = { inhao: 13, table: '12' };
 var obj2 = { inhao: 13, table: '12' };
 var square = {};

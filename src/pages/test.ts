@@ -97,6 +97,18 @@ function createSquare(config: SquareConfig): { color: string; area1: number } {
 let mySquare = createSquare({ color: "black" });
 console.log(mySquare);
 
+// 函数
+
+interface SearchFunc {
+    (source: string, subString: string): boolean;
+}
+
+let mySearch: SearchFunc;
+mySearch = function(source: string, subString: string) {
+    return source.search(subString) !== -1;
+}
+
+
 // 4. 只读
 interface point{
     readonly inhao:number,

@@ -59,8 +59,8 @@ export default {
                     title: "笔记管理",
                     limit:['1','2'],
                     children: [{
-                         path: "/person_set/my_note",
-                         name: "笔记操作",
+                         path: "/person_set/note_list",
+                         name: "笔记列表",
                          limit: ['1', '2']
                     }, ]
                },

@@ -257,6 +257,8 @@ export default {
     // 新建-------------------------------------------------------
     // 1. 点击新增按钮
     add_user() {
+      this.update_add.status = "0";
+
       // 1. 清空数据
       this.update_add.form_data.username = "";
       this.update_add.form_data.psw = "";
